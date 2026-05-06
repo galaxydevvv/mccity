@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The City | Minecraft Map</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
+    <style>
+        :root {
+            --mc-green: #52ad32;
+            --mc-dark-green: #387b21;
+            --mc-gray: #313131;
+            --mc-light-gray: #555555;
+            --mc-dirt: #4e342e;
+            --mc-button-border: #000000;
+            --mc-shadow: #222222;
+            --mc-highlight: #888888;
+
+            --pickaxe-cursor: url("./cursors/Minecraft%20Enchanted%20Diamond%20Pickaxe%20Animated--pointer--SweezyCursors..cur") 4 4, pointer;
+            --torch-cursor: url("./cursors/Minecraft%20Torch%20Animated--cursor--SweezyCursors..ani") 8 24, text;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'VT323', monospace;
+            background: #1a1a1a;
+            color: white;
+            image-rendering: pixelated;
+            overflow-x: hidden;
+            cursor: var(--pickaxe-cursor);
+        }
+
+        a,
+        button,
+        .btn,
+        .carousel-btn,
+        [onclick],
+        [role="button"] {
+            cursor: var(--pickaxe-cursor);
+            position: relative;
+            overflow: hidden;
+        }
+
+        p,
+        li,
+        h1,
+        h2,
+        .carousel-caption,
+        .footer {
+            cursor: var(--torch-cursor);
+        }
+
+        ::selection {
+            background: rgba(255, 176, 46, 0.42);
+            color: #fff4bf;
+            text-shadow:
+                0 0 4px rgba(255, 220, 120, 0.95),
+                0 0 10px rgba(255, 165, 40, 0.95),
+                0 0 18px rgba(255, 110, 0, 0.75);
+        }
+
+        .mining-hover {
+            animation: minePulse 0.22s steps(2) infinite;
+            filter: brightness(1.12);
+        }
+
+        .mining-hover::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(45deg, transparent 44%, rgba(255,255,255,0.22) 45%, rgba(255,255,255,0.22) 47%, transparent 48%),
+                linear-gradient(-35deg, transparent 40%, rgba(0,0,0,0.35) 41%, rgba(0,0,0,0.35) 43%, transparent 44%),
+                radial-gradient(circle at center, rgba(255,255,255,0.12), transparent 60%);
+            mix-blend-mode: screen;
+            animation: crackFlash 0.22s steps(2) infinite;
+        }
+
+        @keyframes minePulse {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(1px, 1px);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        @keyframes crackFlash {
+            0% {
+                opacity: 0.25;
+            }
+
+            50% {
+                opacity: 0.75;
+            }
+
+            100% {
+                opacity: 0.3;
+            }
+        }
+
+        .bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png'),
+                linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url('https://static.planetminecraft.com/files/image/minecraft/texture-pack/2022/405/15317860-image_xl.webp');
+            background-size: auto, auto, 128px;
+            z-index: -1;
+        }
+
+        nav {
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--mc-gray);
+            border-bottom: 4px solid var(--mc-dirt);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 25px;
+            transition: 0.1s;
+            background: #555;
+            border: 3px solid #000;
+            box-shadow: inset -3px -3px var(--mc-shadow), inset 3px 3px var(--mc-highlight);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        nav a:hover {
+            background: #666;
+        }
+
+        nav a:active {
+            background: var(--mc-green);
+        }
+
+        header {
+            text-align: center;
+            padding: 100px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-bottom: 6px solid #000;
+        }
+
+        h1 {
+            font-size: 5rem;
+            margin: 0;
+            text-shadow: 4px 4px #000;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        section {
+            padding-top: 80px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--mc-gray);
+            border: 4px solid #000;
+            padding: 30px;
+            box-shadow: inset -4px -4px var(--mc-shadow), inset 4px 4px var(--mc-highlight);
+        }
+
+        h2 {
+            font-size: 3rem;
+            margin-top: 0;
+            text-shadow: 2px 2px #000;
+            color: var(--mc-green);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            border: 4px solid #000;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .carousel-slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            animation: slideFade 0.5s ease;
+        }
+
+        .carousel-slide.active {
+            display: block;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #555;
+            border: 3px solid #000;
+            box-shadow: inset -3px -3px var(--mc-shadow), inset 3px 3px var(--mc-highlight);
+            color: white;
+            font-family: 'VT323', monospace;
+            font-size: 2rem;
+            padding: 5px 15px;
+            z-index: 10;
+        }
+
+        .carousel-btn:hover {
+            background: #666;
+        }
+
+        .carousel-btn:active {
+            box-shadow: inset 3px 3px var(--mc-shadow);
+        }
+
+        .prev {
+            left: 15px;
+        }
+
+        .next {
+            right: 15px;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            text-align: center;
+            font-size: 1.8rem;
+            border-top: 3px solid var(--mc-green);
+        }
+
+        @keyframes slideFade {
+            from {
+                opacity: 0.5;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 500px;
+            background-color: #222;
+            border: 4px solid #000;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 20px 40px;
+            margin: 15px 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 2rem;
+            border: 4px solid #000;
+            box-shadow: inset -4px -4px rgba(0, 0, 0, 0.4), inset 4px 4px rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        .btn-java {
+            background: #e67e22;
+        }
+
+        .btn-bedrock {
+            background: #2980b9;
+        }
+
+        .btn:hover {
+            filter: brightness(1.1);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+            font-size: 1.2rem;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        li {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            body,
+            a,
+            button,
+            .btn,
+            .carousel-btn,
+            [onclick],
+            [role="button"],
+            p,
+            li,
+            h1,
+            h2,
+            .carousel-caption,
+            .footer {
+                cursor: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-layer"></div>
+
+    <nav>
+        <a href="#project">PROJECT</a>
+        <a href="#showcase">SHOWCASE</a>
+        <a href="#explorer">3D EXPLORER</a>
+        <a href="#download">DOWNLOAD</a>
+    </nav>
+
+    <header>
+        <div class="container">
+            <h1>THE CITY</h1>
+            <p style="font-size: 2rem; color: #aaa;">Minecraft Exploration Map</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section id="project">
+            <div class="card">
+                <h2>PROJECT DETAILS</h2>
+                <p style="font-size: 1.6rem; line-height: 1.5; text-align: center;">
+                    The City is a high-detail urban environment built for discovery. Explore 50+ furnished buildings,
+                    navigable tunnels, and custom-sculpted landscapes.
+                </p>
+                <hr style="border: 2px solid #000; margin: 30px 0;">
+                <div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: center;">
+                    <div style="min-width: 300px;">
+                        <li>Full Quest Line</li>
+                        <li>Handmade Terrain</li>
+                        <li>Detailed Interiors</li>
+                    </div>
+                    <div style="min-width: 300px;">
+                        <li>Version: 1.21.9+</li>
+                        <li>Size: 30MB</li>
+                        <li>Java & Bedrock Support</li>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="showcase">
+            <div class="card">
+                <h2>IMAGE SHOWCASE</h2>
+                <div class="carousel-container">
+                    <button class="carousel-btn prev" onclick="changeSlide(-1)">&lt; PREV</button>
+                    <button class="carousel-btn next" onclick="changeSlide(1)">NEXT &gt;</button>
+
+                    <div class="carousel-slide active">
+                        <img src="https://wallpaperaccess.com/full/1126135.jpg" alt="Skyline">
+                        <div class="carousel-caption">Downtown District - Golden Hour</div>
+                    </div>
+
+                    <div class="carousel-slide">
+                        <img src="https://wallpaperaccess.com/full/1126144.jpg" alt="Subway">
+                        <div class="carousel-caption">Functioning Underground Rail System</div>
+                    </div>
+
+                    <div class="carousel-slide">
+                        <img src="https://wallpaperaccess.com/full/1126155.jpg" alt="Residential">
+                        <div class="carousel-caption">Residential Zone A-1</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="explorer">
+            <div class="card">
+                <h2>3D ARCHITECTURE</h2>
+                <p style="text-align: center; font-size: 1.4rem;">Interact with 3D building assets used in the map.</p>
+
+                <model-viewer
+                    src="building.glb"
+                    alt="City Building Model"
+                    auto-rotate
+                    camera-controls
+                    shadow-intensity="1">
+                </model-viewer>
+
+                <p style="margin-top: 20px; color: #888; text-align: center;">Note: Files loaded from repository.</p>
+            </div>
+        </section>
+
+        <section id="download">
+            <div class="card" style="text-align: center;">
+                <h2>GET THE MAP</h2>
+                <p style="font-size: 1.8rem; margin-bottom: 30px;">Available for free download</p>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+                    <a href="city_map_java.zip" class="btn btn-java">DOWNLOAD JAVA (.ZIP)</a>
+                    <a href="city_map_bedrock.mcworld" class="btn btn-bedrock">DOWNLOAD BEDROCK (.MCWORLD)</a>
+                </div>
+                <p style="margin-top: 40px; color: #888;">Terms: No re-uploading or selling of map assets.</p>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        &copy; 2026 mccity.net - Hosted with Github Pages
+    </footer>
+
+    <script>
+        let slideIndex = 0;
+
+        function changeSlide(n) {
+            const slides = document.getElementsByClassName("carousel-slide");
+            slides[slideIndex].classList.remove("active");
+
+            slideIndex += n;
+
+            if (slideIndex >= slides.length) {
+                slideIndex = 0;
+            }
+
+            if (slideIndex < 0) {
+                slideIndex = slides.length - 1;
+            }
+
+            slides[slideIndex].classList.add("active");
+        }
+
+        const clickableSelector = "a, button, .btn, .carousel-btn, [onclick], [role='button']";
+
+        function clearMiningHover() {
+            document.querySelectorAll(".mining-hover").forEach((el) => {
+                el.classList.remove("mining-hover");
+            });
+        }
+
+        function updateMiningHover(target) {
+            clearMiningHover();
+
+            if (!target) return;
+
+            const clickable = target.closest(clickableSelector);
+            if (clickable) {
+                clickable.classList.add("mining-hover");
+            }
+        }
+
+        document.addEventListener("mouseover", (event) => {
+            updateMiningHover(event.target);
+        });
+
+        document.addEventListener("mousemove", (event) => {
+            const hovered = document.elementFromPoint(event.clientX, event.clientY);
+            updateMiningHover(hovered);
+        });
+
+        document.addEventListener("mouseleave", clearMiningHover);
+    </script>
+</body>
+
+</html>
