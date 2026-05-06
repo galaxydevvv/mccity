@@ -7,7 +7,6 @@
     <title>The City | Minecraft Map</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap">
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
-
     <style>
         :root {
             --mc-green: #52ad32;
@@ -18,9 +17,6 @@
             --mc-button-border: #000000;
             --mc-shadow: #222222;
             --mc-highlight: #888888;
-
-            --pickaxe-cursor: url("./cursors/Minecraft%20Enchanted%20Diamond%20Pickaxe%20Animated--pointer--SweezyCursors..cur") 4 4, pointer;
-            --torch-cursor: url("./cursors/Minecraft%20Torch%20Animated--cursor--SweezyCursors..ani") 8 24, text;
         }
 
         html {
@@ -29,6 +25,7 @@
 
         * {
             box-sizing: border-box;
+            cursor: auto !important;
         }
 
         body {
@@ -38,82 +35,6 @@
             color: white;
             image-rendering: pixelated;
             overflow-x: hidden;
-            cursor: var(--pickaxe-cursor);
-        }
-
-        a,
-        button,
-        .btn,
-        .carousel-btn,
-        [onclick],
-        [role="button"] {
-            cursor: var(--pickaxe-cursor);
-            position: relative;
-            overflow: hidden;
-        }
-
-        p,
-        li,
-        h1,
-        h2,
-        .carousel-caption,
-        .footer {
-            cursor: var(--torch-cursor);
-        }
-
-        ::selection {
-            background: rgba(255, 176, 46, 0.42);
-            color: #fff4bf;
-            text-shadow:
-                0 0 4px rgba(255, 220, 120, 0.95),
-                0 0 10px rgba(255, 165, 40, 0.95),
-                0 0 18px rgba(255, 110, 0, 0.75);
-        }
-
-        .mining-hover {
-            animation: minePulse 0.22s steps(2) infinite;
-            filter: brightness(1.12);
-        }
-
-        .mining-hover::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            background:
-                linear-gradient(45deg, transparent 44%, rgba(255,255,255,0.22) 45%, rgba(255,255,255,0.22) 47%, transparent 48%),
-                linear-gradient(-35deg, transparent 40%, rgba(0,0,0,0.35) 41%, rgba(0,0,0,0.35) 43%, transparent 44%),
-                radial-gradient(circle at center, rgba(255,255,255,0.12), transparent 60%);
-            mix-blend-mode: screen;
-            animation: crackFlash 0.22s steps(2) infinite;
-        }
-
-        @keyframes minePulse {
-            0% {
-                transform: translate(0, 0);
-            }
-
-            50% {
-                transform: translate(1px, 1px);
-            }
-
-            100% {
-                transform: translate(0, 0);
-            }
-        }
-
-        @keyframes crackFlash {
-            0% {
-                opacity: 0.25;
-            }
-
-            50% {
-                opacity: 0.75;
-            }
-
-            100% {
-                opacity: 0.3;
-            }
         }
 
         .bg-layer {
@@ -323,24 +244,6 @@
             font-size: 1.5rem;
             margin-bottom: 10px;
         }
-
-        @media (max-width: 768px) {
-            body,
-            a,
-            button,
-            .btn,
-            .carousel-btn,
-            [onclick],
-            [role="button"],
-            p,
-            li,
-            h1,
-            h2,
-            .carousel-caption,
-            .footer {
-                cursor: auto;
-            }
-        }
     </style>
 </head>
 
@@ -464,36 +367,6 @@
 
             slides[slideIndex].classList.add("active");
         }
-
-        const clickableSelector = "a, button, .btn, .carousel-btn, [onclick], [role='button']";
-
-        function clearMiningHover() {
-            document.querySelectorAll(".mining-hover").forEach((el) => {
-                el.classList.remove("mining-hover");
-            });
-        }
-
-        function updateMiningHover(target) {
-            clearMiningHover();
-
-            if (!target) return;
-
-            const clickable = target.closest(clickableSelector);
-            if (clickable) {
-                clickable.classList.add("mining-hover");
-            }
-        }
-
-        document.addEventListener("mouseover", (event) => {
-            updateMiningHover(event.target);
-        });
-
-        document.addEventListener("mousemove", (event) => {
-            const hovered = document.elementFromPoint(event.clientX, event.clientY);
-            updateMiningHover(hovered);
-        });
-
-        document.addEventListener("mouseleave", clearMiningHover);
     </script>
 </body>
 
