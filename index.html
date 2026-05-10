@@ -124,7 +124,8 @@
             margin-bottom: 30px;
         }
 
-        .carousel-container {
+        .carousel-container,
+        .model-carousel-container {
             position: relative;
             width: 100%;
             height: 600px;
@@ -133,14 +134,16 @@
             overflow: hidden;
         }
 
-        .carousel-slide {
+        .carousel-slide,
+        .model-slide {
             display: none;
             width: 100%;
             height: 100%;
             animation: slideFade 0.5s ease;
         }
 
-        .carousel-slide.active {
+        .carousel-slide.active,
+        .model-slide.active {
             display: block;
         }
 
@@ -164,7 +167,8 @@
             filter: brightness(1.08);
         }
 
-        .carousel-btn {
+        .carousel-btn,
+        .model-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -178,23 +182,28 @@
             z-index: 10;
         }
 
-        .carousel-btn:hover {
+        .carousel-btn:hover,
+        .model-btn:hover {
             background: #666;
         }
 
-        .carousel-btn:active {
+        .carousel-btn:active,
+        .model-btn:active {
             box-shadow: inset 3px 3px var(--mc-shadow);
         }
 
-        .prev {
+        .prev,
+        .model-prev {
             left: 15px;
         }
 
-        .next {
+        .next,
+        .model-next {
             right: 15px;
         }
 
-        .carousel-caption {
+        .carousel-caption,
+        .model-caption {
             position: absolute;
             bottom: 0;
             width: 100%;
@@ -218,9 +227,10 @@
 
         model-viewer {
             width: 100%;
-            height: 500px;
-            background-color: #222;
-            border: 4px solid #000;
+            height: 100%;
+            background:
+                radial-gradient(circle at top, rgba(95, 95, 95, 0.35), transparent 45%),
+                linear-gradient(180deg, #2d2d2d 0%, #191919 100%);
         }
 
         .btn {
@@ -326,7 +336,8 @@
         }
 
         @media (max-width: 768px) {
-            .carousel-container {
+            .carousel-container,
+            .model-carousel-container {
                 height: 360px;
             }
 
@@ -415,7 +426,7 @@
                         <div class="carousel-caption">Town Hall in the middle of the night.</div>
                     </div>
 
-                      <div class="carousel-slide">
+                    <div class="carousel-slide">
                         <button class="carousel-image-btn" type="button" onclick="openLightbox(this)">
                             <img src="https://i.postimg.cc/KcBVL8mp/image.png" alt="industrial zone">
                         </button>
@@ -435,16 +446,64 @@
         <section id="explorer">
             <div class="card">
                 <h2>3D ARCHITECTURE</h2>
-                <p style="text-align: center; font-size: 1.4rem;">Interact with 3D building assets used in the map.</p>
+                <p style="text-align: center; font-size: 1.4rem;">Browse the 3D building assets used in the map.</p>
 
-                <model-viewer
-                    src="building.glb"
-                    alt="City Building Model"
-                    auto-rotate
-                    camera-controls
-                    shadow-intensity="1">
-                </model-viewer>
+                <div class="model-carousel-container">
+                    <button class="model-btn model-prev" onclick="changeModel(-1)">&lt; PREV</button>
+                    <button class="model-btn model-next" onclick="changeModel(1)">NEXT &gt;</button>
 
+                    <div class="model-slide active">
+                        <model-viewer
+                            src="./3dmodels/town-hall.glb"
+                            alt="Town Hall Model"
+                            auto-rotate
+                            camera-controls
+                            shadow-intensity="1"
+                            exposure="1.1">
+                        </model-viewer>
+                        <div class="model-caption">Town Hall</div>
+                    </div>
+
+                    <div class="model-slide">
+                        <model-viewer
+                            src="./3dmodels/downtown-tower.glb"
+                            alt="Downtown Tower Model"
+                            auto-rotate
+                            camera-controls
+                            shadow-intensity="1"
+                            exposure="1.1">
+                        </model-viewer>
+                        <div class="model-caption">Downtown Tower</div>
+                    </div>
+
+                    <div class="model-slide">
+                        <model-viewer
+                            src="./3dmodels/industrial-factory.glb"
+                            alt="Industrial Factory Model"
+                            auto-rotate
+                            camera-controls
+                            shadow-intensity="1"
+                            exposure="1.1">
+                        </model-viewer>
+                        <div class="model-caption">Industrial Factory</div>
+                    </div>
+
+                    <div class="model-slide">
+                        <model-viewer
+                            src="./3dmodels/suburban-house.glb"
+                            alt="Suburban House Model"
+                            auto-rotate
+                            camera-controls
+                            shadow-intensity="1"
+                            exposure="1.1">
+                        </model-viewer>
+                        <div class="model-caption">Suburban House</div>
+                    </div>
+                </div>
+
+                <p style="margin-top: 20px; color: #888; text-align: center;">
+                    Put your `.glb` files in the `3dmodels` folder and rename these model paths to match your real files.
+                </p>
             </div>
         </section>
 
@@ -475,6 +534,7 @@
 
     <script>
         let slideIndex = 0;
+        let modelIndex = 0;
 
         function changeSlide(n) {
             const slides = document.getElementsByClassName("carousel-slide");
@@ -491,6 +551,23 @@
             }
 
             slides[slideIndex].classList.add("active");
+        }
+
+        function changeModel(n) {
+            const slides = document.getElementsByClassName("model-slide");
+            slides[modelIndex].classList.remove("active");
+
+            modelIndex += n;
+
+            if (modelIndex >= slides.length) {
+                modelIndex = 0;
+            }
+
+            if (modelIndex < 0) {
+                modelIndex = slides.length - 1;
+            }
+
+            slides[modelIndex].classList.add("active");
         }
 
         function openLightbox(button) {
