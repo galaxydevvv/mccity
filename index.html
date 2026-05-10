@@ -225,12 +225,41 @@
             }
         }
 
-        model-viewer {
+        .model-frame {
+            position: relative;
             width: 100%;
             height: 100%;
             background:
-                radial-gradient(circle at top, rgba(95, 95, 95, 0.35), transparent 45%),
-                linear-gradient(180deg, #2d2d2d 0%, #191919 100%);
+                radial-gradient(circle at 50% 14%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.04) 28%, transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.12), transparent 30%),
+                linear-gradient(180deg, #7d8b97 0%, #545d65 28%, #2b2f34 58%, #111315 100%);
+            box-shadow: inset 0 0 80px rgba(255, 255, 255, 0.05);
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            --poster-color: transparent;
+        }
+
+        .model-warning {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
+            font-size: 1.6rem;
+            line-height: 1.4;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.86);
+            z-index: 6;
+        }
+
+        .model-warning.show {
+            display: flex;
         }
 
         .btn {
@@ -352,6 +381,10 @@
             .lightbox-caption {
                 font-size: 1.4rem;
             }
+
+            .model-warning {
+                font-size: 1.25rem;
+            }
         }
     </style>
 </head>
@@ -453,74 +486,152 @@
                     <button class="model-btn model-next" onclick="changeModel(1)">NEXT &gt;</button>
 
                     <div class="model-slide active">
-                        <model-viewer
-                            src="./3dmodels/Bank.glb"
-                            alt="Bank Model"
-                            auto-rotate
-                            camera-controls
-                            shadow-intensity="1"
-                            exposure="1.1">
-                        </model-viewer>
+                        <div class="model-frame">
+                            <model-viewer
+                                src="./3dmodels/Bank.glb"
+                                alt="Bank Model"
+                                auto-rotate
+                                auto-rotate-delay="0"
+                                rotation-per-second="12deg"
+                                camera-controls
+                                environment-image="legacy"
+                                exposure="1.22"
+                                shadow-intensity="1.45"
+                                shadow-softness="1"
+                                camera-orbit="32deg 70deg auto"
+                                min-camera-orbit="auto 10deg auto"
+                                max-camera-orbit="auto 88deg auto"
+                                field-of-view="28deg"
+                                interaction-prompt="none"
+                                touch-action="pan-y">
+                            </model-viewer>
+                            <div class="model-warning">This 3D model could not be viewed in your browser. Check your internet connection or browser 3D support.</div>
+                        </div>
                         <div class="model-caption">The Bank</div>
                     </div>
 
                     <div class="model-slide">
-                        <model-viewer
-                            src="./3dmodels/House.glb"
-                            alt="House Model"
-                            auto-rotate
-                            camera-controls
-                            shadow-intensity="1"
-                            exposure="1.1">
-                        </model-viewer>
+                        <div class="model-frame">
+                            <model-viewer
+                                src="./3dmodels/House.glb"
+                                alt="House Model"
+                                auto-rotate
+                                auto-rotate-delay="0"
+                                rotation-per-second="12deg"
+                                camera-controls
+                                environment-image="legacy"
+                                exposure="1.22"
+                                shadow-intensity="1.45"
+                                shadow-softness="1"
+                                camera-orbit="32deg 70deg auto"
+                                min-camera-orbit="auto 10deg auto"
+                                max-camera-orbit="auto 88deg auto"
+                                field-of-view="28deg"
+                                interaction-prompt="none"
+                                touch-action="pan-y">
+                            </model-viewer>
+                            <div class="model-warning">This 3D model could not be viewed in your browser. Check your internet connection or browser 3D support.</div>
+                        </div>
                         <div class="model-caption">Detailed Home</div>
                     </div>
 
-                      <div class="model-slide">
-                        <model-viewer
-                            src="./3dmodels/Bridge.glb"
-                            alt="Bridge Model"
-                            auto-rotate
-                            camera-controls
-                            shadow-intensity="1"
-                            exposure="1.1">
-                        </model-viewer>
+                    <div class="model-slide">
+                        <div class="model-frame">
+                            <model-viewer
+                                src="./3dmodels/Bridge.glb"
+                                alt="Bridge Model"
+                                auto-rotate
+                                auto-rotate-delay="0"
+                                rotation-per-second="12deg"
+                                camera-controls
+                                environment-image="legacy"
+                                exposure="1.22"
+                                shadow-intensity="1.45"
+                                shadow-softness="1"
+                                camera-orbit="32deg 70deg auto"
+                                min-camera-orbit="auto 10deg auto"
+                                max-camera-orbit="auto 88deg auto"
+                                field-of-view="28deg"
+                                interaction-prompt="none"
+                                touch-action="pan-y">
+                            </model-viewer>
+                            <div class="model-warning">This 3D model could not be viewed in your browser. Check your internet connection or browser 3D support.</div>
+                        </div>
                         <div class="model-caption">Riverside Bridge</div>
                     </div>
-                    
+
                     <div class="model-slide">
-                        <model-viewer
-                            src="./3dmodels/Factory.glb"
-                            alt="Factory Model"
-                            auto-rotate
-                            camera-controls
-                            shadow-intensity="1"
-                            exposure="1.1">
-                        </model-viewer>
+                        <div class="model-frame">
+                            <model-viewer
+                                src="./3dmodels/Factory.glb"
+                                alt="Factory Model"
+                                auto-rotate
+                                auto-rotate-delay="0"
+                                rotation-per-second="12deg"
+                                camera-controls
+                                environment-image="legacy"
+                                exposure="1.22"
+                                shadow-intensity="1.45"
+                                shadow-softness="1"
+                                camera-orbit="32deg 70deg auto"
+                                min-camera-orbit="auto 10deg auto"
+                                max-camera-orbit="auto 88deg auto"
+                                field-of-view="28deg"
+                                interaction-prompt="none"
+                                touch-action="pan-y">
+                            </model-viewer>
+                            <div class="model-warning">This 3D model could not be viewed in your browser. Check your internet connection or browser 3D support.</div>
+                        </div>
                         <div class="model-caption">The Copper Factory</div>
                     </div>
 
                     <div class="model-slide">
-                        <model-viewer
-                            src="./3dmodels/DeepTower.glb"
-                            alt="Skyscraper Model"
-                            auto-rotate
-                            camera-controls
-                            shadow-intensity="1"
-                            exposure="1.1">
-                        </model-viewer>
+                        <div class="model-frame">
+                            <model-viewer
+                                src="./3dmodels/DeepTower.glb"
+                                alt="Skyscraper Model"
+                                auto-rotate
+                                auto-rotate-delay="0"
+                                rotation-per-second="12deg"
+                                camera-controls
+                                environment-image="legacy"
+                                exposure="1.22"
+                                shadow-intensity="1.45"
+                                shadow-softness="1"
+                                camera-orbit="32deg 70deg auto"
+                                min-camera-orbit="auto 10deg auto"
+                                max-camera-orbit="auto 88deg auto"
+                                field-of-view="28deg"
+                                interaction-prompt="none"
+                                touch-action="pan-y">
+                            </model-viewer>
+                            <div class="model-warning">This 3D model could not be viewed in your browser. Check your internet connection or browser 3D support.</div>
+                        </div>
                         <div class="model-caption">Deep Inc. Tower</div>
-                        
                     </div>
-                      <div class="model-slide">
-                        <model-viewer
-                            src="./3dmodels/Diner.glb"
-                            alt="Diner Model"
-                            auto-rotate
-                            camera-controls
-                            shadow-intensity="1"
-                            exposure="1.1">
-                        </model-viewer>
+
+                    <div class="model-slide">
+                        <div class="model-frame">
+                            <model-viewer
+                                src="./3dmodels/Diner.glb"
+                                alt="Diner Model"
+                                auto-rotate
+                                auto-rotate-delay="0"
+                                rotation-per-second="12deg"
+                                camera-controls
+                                environment-image="legacy"
+                                exposure="1.22"
+                                shadow-intensity="1.45"
+                                shadow-softness="1"
+                                camera-orbit="32deg 70deg auto"
+                                min-camera-orbit="auto 10deg auto"
+                                max-camera-orbit="auto 88deg auto"
+                                field-of-view="28deg"
+                                interaction-prompt="none"
+                                touch-action="pan-y">
+                            </model-viewer>
+                            <div class="model-warning">This 3D model could not be viewed in your browser. Check your internet connection or browser 3D support.</div>
+                        </div>
                         <div class="model-caption">Town Diner</div>
                     </div>
                 </div>
@@ -613,11 +724,49 @@
             document.body.style.overflow = "";
         }
 
+        function updateModelWarnings() {
+            const offline = !navigator.onLine;
+            document.querySelectorAll(".model-frame").forEach((frame) => {
+                const viewer = frame.querySelector("model-viewer");
+                const warning = frame.querySelector(".model-warning");
+
+                if (offline) {
+                    warning.classList.add("show");
+                    warning.textContent = "This 3D model could not be viewed because you appear to be offline.";
+                }
+
+                viewer.addEventListener("load", () => {
+                    if (!navigator.onLine) return;
+                    warning.classList.remove("show");
+                });
+
+                viewer.addEventListener("error", () => {
+                    warning.classList.add("show");
+                    warning.textContent = "This 3D model could not be viewed in your browser. Check your internet connection or browser 3D support.";
+                });
+            });
+        }
+
         document.addEventListener("keydown", (event) => {
             if (event.key === "Escape") {
                 closeLightbox();
             }
         });
+
+        window.addEventListener("offline", () => {
+            document.querySelectorAll(".model-warning").forEach((warning) => {
+                warning.classList.add("show");
+                warning.textContent = "This 3D model could not be viewed because you appear to be offline.";
+            });
+        });
+
+        window.addEventListener("online", () => {
+            document.querySelectorAll(".model-warning").forEach((warning) => {
+                warning.classList.remove("show");
+            });
+        });
+
+        updateModelWarnings();
     </script>
 </body>
 
