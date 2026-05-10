@@ -144,10 +144,24 @@
             display: block;
         }
 
+        .carousel-image-btn {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            padding: 0;
+            background: transparent;
+            display: block;
+        }
+
         .carousel-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
+        }
+
+        .carousel-image-btn:hover img {
+            filter: brightness(1.08);
         }
 
         .carousel-btn {
@@ -189,6 +203,7 @@
             text-align: center;
             font-size: 1.8rem;
             border-top: 3px solid var(--mc-green);
+            z-index: 5;
         }
 
         @keyframes slideFade {
@@ -244,6 +259,89 @@
             font-size: 1.5rem;
             margin-bottom: 10px;
         }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 16px;
+            z-index: 1000;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            width: min(96vw, 1400px);
+            max-height: 92vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 78vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            background: #111;
+            border: 4px solid #000;
+            box-shadow: 0 0 0 4px var(--mc-gray), 0 18px 40px rgba(0, 0, 0, 0.55);
+            image-rendering: auto;
+        }
+
+        .lightbox-caption {
+            width: 100%;
+            text-align: center;
+            font-size: 1.8rem;
+            background: rgba(49, 49, 49, 0.95);
+            border: 3px solid #000;
+            box-shadow: inset -3px -3px var(--mc-shadow), inset 3px 3px var(--mc-highlight);
+            padding: 12px 18px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #555;
+            border: 3px solid #000;
+            box-shadow: inset -3px -3px var(--mc-shadow), inset 3px 3px var(--mc-highlight);
+            color: white;
+            font-family: 'VT323', monospace;
+            font-size: 2rem;
+            padding: 4px 14px;
+            line-height: 1;
+        }
+
+        .lightbox-close:hover {
+            background: #666;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-container {
+                height: 360px;
+            }
+
+            h1 {
+                font-size: 3.4rem;
+            }
+
+            .lightbox-image {
+                max-height: 70vh;
+            }
+
+            .lightbox-caption {
+                font-size: 1.4rem;
+            }
+        }
     </style>
 </head>
 
@@ -297,22 +395,37 @@
                     <button class="carousel-btn next" onclick="changeSlide(1)">NEXT &gt;</button>
 
                     <div class="carousel-slide active">
-                        <img src="https://i.postimg.cc/vZfdZtc9/image.png" alt="neighborhood">
+                        <button class="carousel-image-btn" type="button" onclick="openLightbox(this)">
+                            <img src="https://i.postimg.cc/vZfdZtc9/image.png" alt="The Neighborhood">
+                        </button>
                         <div class="carousel-caption">The Neighborhood - Home to tons of different homes</div>
                     </div>
 
                     <div class="carousel-slide">
-                        <img src="https://i.postimg.cc/yxMrM2h9/Screenshot-2026-05-09-225239.png" alt="downtown">
+                        <button class="carousel-image-btn" type="button" onclick="openLightbox(this)">
+                            <img src="https://i.postimg.cc/yxMrM2h9/Screenshot-2026-05-09-225239.png" alt="Downtown">
+                        </button>
                         <div class="carousel-caption">Downtown - Suscessful Businesses to Shady Deals</div>
-                    </div>
-                    
-                     <div class="carousel-slide">
-                        <img src="https://i.postimg.cc/VLj8YFSy/image.png" alt="town hall">
-                        <div class="carousel-caption">Town Hall in the middle of the night.</div>
                     </div>
 
                     <div class="carousel-slide">
-                        <img src="https://i.postimg.cc/SRBtBHLM/Screenshot-2026-05-09-225407.png" alt="commercial zone">
+                        <button class="carousel-image-btn" type="button" onclick="openLightbox(this)">
+                            <img src="https://i.postimg.cc/VLj8YFSy/image.png" alt="Town Hall in the middle of the night">
+                        </button>
+                        <div class="carousel-caption">Town Hall in the middle of the night.</div>
+                    </div>
+
+                      <div class="carousel-slide">
+                        <button class="carousel-image-btn" type="button" onclick="openLightbox(this)">
+                            <img src="https://i.postimg.cc/KcBVL8mp/image.png" alt="industrial zone">
+                        </button>
+                        <div class="carousel-caption">Overcast day in the Industrial Zone.</div>
+                    </div>
+
+                    <div class="carousel-slide">
+                        <button class="carousel-image-btn" type="button" onclick="openLightbox(this)">
+                            <img src="https://i.postimg.cc/SRBtBHLM/Screenshot-2026-05-09-225407.png" alt="Sunset over the commercial zone">
+                        </button>
                         <div class="carousel-caption">Sunset over the commercial zone.</div>
                     </div>
                 </div>
@@ -353,6 +466,14 @@
         &copy; 2026 mccity.net - Hosted with Github Pages
     </footer>
 
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <div class="lightbox-content">
+            <button class="lightbox-close" type="button" onclick="closeLightbox()">X</button>
+            <img class="lightbox-image" id="lightboxImage" src="" alt="">
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+    </div>
+
     <script>
         let slideIndex = 0;
 
@@ -372,6 +493,35 @@
 
             slides[slideIndex].classList.add("active");
         }
+
+        function openLightbox(button) {
+            const image = button.querySelector("img");
+            const caption = button.parentElement.querySelector(".carousel-caption").textContent;
+            const lightbox = document.getElementById("lightbox");
+            const lightboxImage = document.getElementById("lightboxImage");
+            const lightboxCaption = document.getElementById("lightboxCaption");
+
+            lightboxImage.src = image.src;
+            lightboxImage.alt = image.alt;
+            lightboxCaption.textContent = caption;
+            lightbox.classList.add("active");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeLightbox(event) {
+            if (event && event.target !== event.currentTarget) {
+                return;
+            }
+
+            document.getElementById("lightbox").classList.remove("active");
+            document.body.style.overflow = "";
+        }
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                closeLightbox();
+            }
+        });
     </script>
 </body>
 
