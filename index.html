@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The City | Minecraft Map</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
     <style>
         :root {
             --mc-green: #52ad32;
@@ -133,14 +134,16 @@
             overflow: hidden;
         }
 
-        .carousel-slide {
+        .carousel-slide,
+        .model-slide {
             display: none;
             width: 100%;
             height: 100%;
             animation: slideFade 0.5s ease;
         }
 
-        .carousel-slide.active {
+        .carousel-slide.active,
+        .model-slide.active {
             display: block;
         }
 
@@ -222,39 +225,55 @@
             }
         }
 
-        .three-viewer {
-            position: absolute;
-            inset: 0;
+        .model-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 78% 16%, rgba(255, 222, 137, 0.55), transparent 18%),
+                radial-gradient(circle at 25% 26%, rgba(255, 132, 84, 0.22), transparent 22%),
+                radial-gradient(circle at 50% 82%, rgba(107, 164, 255, 0.16), transparent 26%),
+                linear-gradient(180deg, #91b8db 0%, #6d8ca3 18%, #46586a 40%, #222831 68%, #0f1217 100%);
+            box-shadow:
+                inset 0 0 80px rgba(255, 255, 255, 0.06),
+                inset 0 -110px 130px rgba(0, 0, 0, 0.35);
         }
 
-        .viewer-warning {
+        .model-frame::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 50% 75%, rgba(255, 255, 255, 0.18), transparent 24%),
+                linear-gradient(180deg, transparent 0%, transparent 60%, rgba(0, 0, 0, 0.18) 100%);
+            z-index: 1;
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            --poster-color: transparent;
+        }
+
+        .model-warning {
             position: absolute;
             inset: 0;
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 28px;
+            padding: 24px;
             text-align: center;
             font-size: 1.6rem;
-            line-height: 1.35;
+            line-height: 1.4;
             color: #fff;
-            background: rgba(0, 0, 0, 0.82);
-            z-index: 8;
+            background: rgba(0, 0, 0, 0.86);
+            z-index: 6;
         }
 
-        .viewer-warning.show {
+        .model-warning.show {
             display: flex;
-        }
-
-        .model-help {
-            margin-top: 18px;
-            text-align: center;
-            color: #bdbdbd;
-            font-size: 1.2rem;
-        }
-
-        .model-help strong {
-            color: #fff;
         }
 
         .btn {
@@ -377,12 +396,8 @@
                 font-size: 1.4rem;
             }
 
-            .viewer-warning {
-                font-size: 1.2rem;
-            }
-
-            .model-help {
-                font-size: 1rem;
+            .model-warning {
+                font-size: 1.25rem;
             }
         }
     </style>
@@ -484,13 +499,183 @@
                     <button class="model-btn model-prev" onclick="changeModel(-1)">&lt; PREV</button>
                     <button class="model-btn model-next" onclick="changeModel(1)">NEXT &gt;</button>
 
-                    <div id="threeViewer" class="three-viewer"></div>
-                    <div id="viewerWarning" class="viewer-warning">This 3D model could not be viewed in your browser. Check your internet connection or browser 3D support.</div>
-                    <div id="modelCaption" class="model-caption">The Bank</div>
+                    <div class="model-slide active">
+                        <div class="model-frame">
+                            <model-viewer
+                                src="./3dmodels/Bank.glb"
+                                alt="Bank Model"
+                                camera-controls
+                                auto-rotate
+                                auto-rotate-delay="0"
+                                rotation-per-second="10deg"
+                                environment-image="legacy"
+                                exposure="1.55"
+                                shadow-intensity="2"
+                                shadow-softness="0.35"
+                                camera-orbit="35deg 68deg auto"
+                                camera-target="auto auto auto"
+                                min-camera-orbit="auto 5deg 0.15m"
+                                max-camera-orbit="auto 89deg 200m"
+                                min-field-of-view="6deg"
+                                max-field-of-view="75deg"
+                                field-of-view="24deg"
+                                interaction-prompt="none"
+                                touch-action="pan-y"
+                                interpolation-decay="120">
+                            </model-viewer>
+                            <div class="model-warning">This 3D model could not be viewed in your browser. Check your internet connection or browser 3D support.</div>
+                        </div>
+                        <div class="model-caption">The Bank</div>
+                    </div>
+
+                    <div class="model-slide">
+                        <div class="model-frame">
+                            <model-viewer
+                                src="./3dmodels/House.glb"
+                                alt="House Model"
+                                camera-controls
+                                auto-rotate
+                                auto-rotate-delay="0"
+                                rotation-per-second="10deg"
+                                environment-image="legacy"
+                                exposure="1.55"
+                                shadow-intensity="2"
+                                shadow-softness="0.35"
+                                camera-orbit="35deg 68deg auto"
+                                camera-target="auto auto auto"
+                                min-camera-orbit="auto 5deg 0.15m"
+                                max-camera-orbit="auto 89deg 200m"
+                                min-field-of-view="6deg"
+                                max-field-of-view="75deg"
+                                field-of-view="24deg"
+                                interaction-prompt="none"
+                                touch-action="pan-y"
+                                interpolation-decay="120">
+                            </model-viewer>
+                            <div class="model-warning">This 3D model could not be viewed in your browser. Check your internet connection or browser 3D support.</div>
+                        </div>
+                        <div class="model-caption">Detailed Home</div>
+                    </div>
+
+                    <div class="model-slide">
+                        <div class="model-frame">
+                            <model-viewer
+                                src="./3dmodels/Bridge.glb"
+                                alt="Bridge Model"
+                                camera-controls
+                                auto-rotate
+                                auto-rotate-delay="0"
+                                rotation-per-second="10deg"
+                                environment-image="legacy"
+                                exposure="1.55"
+                                shadow-intensity="2"
+                                shadow-softness="0.35"
+                                camera-orbit="35deg 68deg auto"
+                                camera-target="auto auto auto"
+                                min-camera-orbit="auto 5deg 0.15m"
+                                max-camera-orbit="auto 89deg 200m"
+                                min-field-of-view="6deg"
+                                max-field-of-view="75deg"
+                                field-of-view="24deg"
+                                interaction-prompt="none"
+                                touch-action="pan-y"
+                                interpolation-decay="120">
+                            </model-viewer>
+                            <div class="model-warning">This 3D model could not be viewed in your browser. Check your internet connection or browser 3D support.</div>
+                        </div>
+                        <div class="model-caption">Riverside Bridge</div>
+                    </div>
+
+                    <div class="model-slide">
+                        <div class="model-frame">
+                            <model-viewer
+                                src="./3dmodels/Factory.glb"
+                                alt="Factory Model"
+                                camera-controls
+                                auto-rotate
+                                auto-rotate-delay="0"
+                                rotation-per-second="10deg"
+                                environment-image="legacy"
+                                exposure="1.55"
+                                shadow-intensity="2"
+                                shadow-softness="0.35"
+                                camera-orbit="35deg 68deg auto"
+                                camera-target="auto auto auto"
+                                min-camera-orbit="auto 5deg 0.15m"
+                                max-camera-orbit="auto 89deg 200m"
+                                min-field-of-view="6deg"
+                                max-field-of-view="75deg"
+                                field-of-view="24deg"
+                                interaction-prompt="none"
+                                touch-action="pan-y"
+                                interpolation-decay="120">
+                            </model-viewer>
+                            <div class="model-warning">This 3D model could not be viewed in your browser. Check your internet connection or browser 3D support.</div>
+                        </div>
+                        <div class="model-caption">The Copper Factory</div>
+                    </div>
+
+                    <div class="model-slide">
+                        <div class="model-frame">
+                            <model-viewer
+                                src="./3dmodels/DeepTower.glb"
+                                alt="Skyscraper Model"
+                                camera-controls
+                                auto-rotate
+                                auto-rotate-delay="0"
+                                rotation-per-second="10deg"
+                                environment-image="legacy"
+                                exposure="1.55"
+                                shadow-intensity="2"
+                                shadow-softness="0.35"
+                                camera-orbit="35deg 68deg auto"
+                                camera-target="auto auto auto"
+                                min-camera-orbit="auto 5deg 0.15m"
+                                max-camera-orbit="auto 89deg 200m"
+                                min-field-of-view="6deg"
+                                max-field-of-view="75deg"
+                                field-of-view="24deg"
+                                interaction-prompt="none"
+                                touch-action="pan-y"
+                                interpolation-decay="120">
+                            </model-viewer>
+                            <div class="model-warning">This 3D model could not be viewed in your browser. Check your internet connection or browser 3D support.</div>
+                        </div>
+                        <div class="model-caption">Deep Inc. Tower</div>
+                    </div>
+
+                    <div class="model-slide">
+                        <div class="model-frame">
+                            <model-viewer
+                                src="./3dmodels/Diner.glb"
+                                alt="Diner Model"
+                                camera-controls
+                                auto-rotate
+                                auto-rotate-delay="0"
+                                rotation-per-second="10deg"
+                                environment-image="legacy"
+                                exposure="1.55"
+                                shadow-intensity="2"
+                                shadow-softness="0.35"
+                                camera-orbit="35deg 68deg auto"
+                                camera-target="auto auto auto"
+                                min-camera-orbit="auto 5deg 0.15m"
+                                max-camera-orbit="auto 89deg 200m"
+                                min-field-of-view="6deg"
+                                max-field-of-view="75deg"
+                                field-of-view="24deg"
+                                interaction-prompt="none"
+                                touch-action="pan-y"
+                                interpolation-decay="120">
+                            </model-viewer>
+                            <div class="model-warning">This 3D model could not be viewed in your browser. Check your internet connection or browser 3D support.</div>
+                        </div>
+                        <div class="model-caption">Town Diner</div>
+                    </div>
                 </div>
 
-                <p class="model-help">
-                    Left drag to rotate. Right drag to pan. Scroll to zoom all the way inside buildings.
+                <p style="margin-top: 18px; text-align: center; color: #bdbdbd; font-size: 1.2rem;">
+                    Left drag to rotate. Right drag to pan. Scroll to zoom far inside buildings.
                 </p>
             </div>
         </section>
@@ -522,6 +707,7 @@
 
     <script>
         let slideIndex = 0;
+        let modelIndex = 0;
 
         function changeSlide(n) {
             const slides = document.getElementsByClassName("carousel-slide");
@@ -538,6 +724,23 @@
             }
 
             slides[slideIndex].classList.add("active");
+        }
+
+        function changeModel(n) {
+            const slides = document.getElementsByClassName("model-slide");
+            slides[modelIndex].classList.remove("active");
+
+            modelIndex += n;
+
+            if (modelIndex >= slides.length) {
+                modelIndex = 0;
+            }
+
+            if (modelIndex < 0) {
+                modelIndex = slides.length - 1;
+            }
+
+            slides[modelIndex].classList.add("active");
         }
 
         function openLightbox(button) {
@@ -563,273 +766,49 @@
             document.body.style.overflow = "";
         }
 
+        function updateModelWarnings() {
+            const offline = !navigator.onLine;
+            document.querySelectorAll(".model-frame").forEach((frame) => {
+                const viewer = frame.querySelector("model-viewer");
+                const warning = frame.querySelector(".model-warning");
+
+                if (offline) {
+                    warning.classList.add("show");
+                    warning.textContent = "This 3D model could not be viewed because you appear to be offline.";
+                }
+
+                viewer.addEventListener("load", () => {
+                    if (!navigator.onLine) return;
+                    warning.classList.remove("show");
+                });
+
+                viewer.addEventListener("error", () => {
+                    warning.classList.add("show");
+                    warning.textContent = "This 3D model could not be viewed in your browser. Check your internet connection or browser 3D support.";
+                });
+            });
+        }
+
         document.addEventListener("keydown", (event) => {
             if (event.key === "Escape") {
                 closeLightbox();
             }
         });
-    </script>
 
-    <script type="module">
-        import * as THREE from 'https://unpkg.com/three@0.165.0/build/three.module.js';
-        import { OrbitControls } from 'https://unpkg.com/three@0.165.0/examples/jsm/controls/OrbitControls.js';
-        import { GLTFLoader } from 'https://unpkg.com/three@0.165.0/examples/jsm/loaders/GLTFLoader.js';
-
-        const viewerHost = document.getElementById('threeViewer');
-        const warningEl = document.getElementById('viewerWarning');
-        const captionEl = document.getElementById('modelCaption');
-
-        const models = [
-            { file: './3dmodels/Bank.glb', caption: 'The Bank' },
-            { file: './3dmodels/House.glb', caption: 'Detailed Home' },
-            { file: './3dmodels/Bridge.glb', caption: 'Riverside Bridge' },
-            { file: './3dmodels/Factory.glb', caption: 'The Copper Factory' },
-            { file: './3dmodels/DeepTower.glb', caption: 'Deep Inc. Tower' },
-            { file: './3dmodels/Diner.glb', caption: 'Town Diner' }
-        ];
-
-        let modelIndex = 0;
-        let currentModel = null;
-
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.setSize(viewerHost.clientWidth, viewerHost.clientHeight);
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.3;
-        renderer.outputColorSpace = THREE.SRGBColorSpace;
-        viewerHost.appendChild(renderer.domElement);
-
-        const scene = new THREE.Scene();
-        scene.fog = new THREE.Fog(0x182230, 40, 180);
-
-        const camera = new THREE.PerspectiveCamera(36, viewerHost.clientWidth / viewerHost.clientHeight, 0.05, 1000);
-        camera.position.set(10, 8, 14);
-
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.06;
-        controls.enablePan = true;
-        controls.screenSpacePanning = true;
-        controls.zoomToCursor = true;
-        controls.minDistance = 0.12;
-        controls.maxDistance = 400;
-        controls.minPolarAngle = 0.05;
-        controls.maxPolarAngle = Math.PI / 2;
-        controls.autoRotate = true;
-        controls.autoRotateSpeed = 0.7;
-        controls.target.set(0, 2, 0);
-
-        const skyGeometry = new THREE.SphereGeometry(300, 32, 16);
-        const skyMaterial = new THREE.ShaderMaterial({
-            side: THREE.BackSide,
-            uniforms: {
-                topColor: { value: new THREE.Color(0x9fd0ff) },
-                middleColor: { value: new THREE.Color(0x5d7ea8) },
-                bottomColor: { value: new THREE.Color(0x0d1117) },
-                sunColor: { value: new THREE.Color(0xffd28c) },
-                sunDirection: { value: new THREE.Vector3(0.65, 0.75, 0.25).normalize() }
-            },
-            vertexShader: `
-                varying vec3 vWorldPosition;
-                varying vec3 vWorldNormal;
-                void main() {
-                    vec4 worldPosition = modelMatrix * vec4(position, 1.0);
-                    vWorldPosition = worldPosition.xyz;
-                    vWorldNormal = normalize(mat3(modelMatrix) * normal);
-                    gl_Position = projectionMatrix * viewMatrix * worldPosition;
-                }
-            `,
-            fragmentShader: `
-                uniform vec3 topColor;
-                uniform vec3 middleColor;
-                uniform vec3 bottomColor;
-                uniform vec3 sunColor;
-                uniform vec3 sunDirection;
-                varying vec3 vWorldPosition;
-                varying vec3 vWorldNormal;
-
-                void main() {
-                    float h = normalize(vWorldPosition).y * 0.5 + 0.5;
-                    vec3 grad = mix(bottomColor, middleColor, smoothstep(0.0, 0.55, h));
-                    grad = mix(grad, topColor, smoothstep(0.45, 1.0, h));
-
-                    float sunAmount = max(dot(normalize(vWorldNormal), normalize(sunDirection)), 0.0);
-                    float sunGlow = pow(sunAmount, 48.0) * 0.9 + pow(sunAmount, 8.0) * 0.18;
-
-                    gl_FragColor = vec4(grad + sunColor * sunGlow, 1.0);
-                }
-            `
-        });
-        const sky = new THREE.Mesh(skyGeometry, skyMaterial);
-        scene.add(sky);
-
-        const groundGeometry = new THREE.CircleGeometry(120, 64);
-        const groundMaterial = new THREE.ShadowMaterial({ color: 0x000000, opacity: 0.38 });
-        const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-        ground.rotation.x = -Math.PI / 2;
-        ground.position.y = -0.02;
-        ground.receiveShadow = true;
-        scene.add(ground);
-
-        const floorGlowGeometry = new THREE.CircleGeometry(70, 64);
-        const floorGlowMaterial = new THREE.MeshBasicMaterial({
-            color: 0x8fc2ff,
-            transparent: true,
-            opacity: 0.08
-        });
-        const floorGlow = new THREE.Mesh(floorGlowGeometry, floorGlowMaterial);
-        floorGlow.rotation.x = -Math.PI / 2;
-        floorGlow.position.y = -0.01;
-        scene.add(floorGlow);
-
-        const hemiLight = new THREE.HemisphereLight(0xa9d2ff, 0x2a1d13, 2.1);
-        scene.add(hemiLight);
-
-        const sunLight = new THREE.DirectionalLight(0xfff0c9, 4.8);
-        sunLight.position.set(18, 28, 14);
-        sunLight.castShadow = true;
-        sunLight.shadow.mapSize.width = 2048;
-        sunLight.shadow.mapSize.height = 2048;
-        sunLight.shadow.bias = -0.00008;
-        sunLight.shadow.normalBias = 0.02;
-        sunLight.shadow.camera.near = 1;
-        sunLight.shadow.camera.far = 120;
-        sunLight.shadow.camera.left = -35;
-        sunLight.shadow.camera.right = 35;
-        sunLight.shadow.camera.top = 35;
-        sunLight.shadow.camera.bottom = -35;
-        scene.add(sunLight);
-
-        const warmFill = new THREE.PointLight(0xffa86b, 18, 60, 2);
-        warmFill.position.set(-12, 10, 8);
-        scene.add(warmFill);
-
-        const coolFill = new THREE.PointLight(0x6aa8ff, 14, 80, 2);
-        coolFill.position.set(14, 6, -12);
-        scene.add(coolFill);
-
-        const loader = new GLTFLoader();
-        const clock = new THREE.Clock();
-
-        function showWarning(message) {
-            warningEl.textContent = message;
-            warningEl.classList.add('show');
-        }
-
-        function hideWarning() {
-            warningEl.classList.remove('show');
-        }
-
-        function setShadows(object) {
-            object.traverse((child) => {
-                if (child.isMesh) {
-                    child.castShadow = true;
-                    child.receiveShadow = true;
-
-                    if (child.material) {
-                        const materials = Array.isArray(child.material) ? child.material : [child.material];
-                        materials.forEach((material) => {
-                            if ('envMapIntensity' in material) {
-                                material.envMapIntensity = 1.25;
-                            }
-                            if ('metalness' in material) {
-                                material.metalness = Math.min(material.metalness ?? 0, 0.35);
-                            }
-                            if ('roughness' in material) {
-                                material.roughness = Math.max(material.roughness ?? 1, 0.55);
-                            }
-                        });
-                    }
-                }
+        window.addEventListener("offline", () => {
+            document.querySelectorAll(".model-warning").forEach((warning) => {
+                warning.classList.add("show");
+                warning.textContent = "This 3D model could not be viewed because you appear to be offline.";
             });
-        }
-
-        function frameModel(object) {
-            const box = new THREE.Box3().setFromObject(object);
-            const size = box.getSize(new THREE.Vector3());
-            const center = box.getCenter(new THREE.Vector3());
-
-            controls.target.copy(center);
-
-            const maxDim = Math.max(size.x, size.y, size.z, 1);
-            const fitDistance = maxDim * 1.6;
-
-            camera.position.set(
-                center.x + fitDistance * 0.95,
-                center.y + fitDistance * 0.65,
-                center.z + fitDistance * 0.95
-            );
-
-            controls.minDistance = Math.max(maxDim * 0.03, 0.12);
-            controls.maxDistance = Math.max(maxDim * 20, 200);
-            camera.near = Math.max(maxDim / 200, 0.02);
-            camera.far = Math.max(maxDim * 80, 1000);
-            camera.updateProjectionMatrix();
-            controls.update();
-        }
-
-        function loadModel(index) {
-            modelIndex = (index + models.length) % models.length;
-            const model = models[modelIndex];
-
-            captionEl.textContent = model.caption;
-            hideWarning();
-
-            if (!navigator.onLine) {
-                showWarning('This 3D model could not be viewed because you appear to be offline.');
-                return;
-            }
-
-            loader.load(
-                model.file,
-                (gltf) => {
-                    if (currentModel) {
-                        scene.remove(currentModel);
-                    }
-
-                    currentModel = gltf.scene;
-                    setShadows(currentModel);
-                    scene.add(currentModel);
-                    frameModel(currentModel);
-                    hideWarning();
-                },
-                undefined,
-                () => {
-                    showWarning('This 3D model could not be viewed in your browser. Check your internet connection or browser 3D support.');
-                }
-            );
-        }
-
-        window.changeModel = function (direction) {
-            loadModel(modelIndex + direction);
-        };
-
-        window.addEventListener('offline', () => {
-            showWarning('This 3D model could not be viewed because you appear to be offline.');
         });
 
-        window.addEventListener('online', () => {
-            loadModel(modelIndex);
+        window.addEventListener("online", () => {
+            document.querySelectorAll(".model-warning").forEach((warning) => {
+                warning.classList.remove("show");
+            });
         });
 
-        window.addEventListener('resize', () => {
-            const width = viewerHost.clientWidth;
-            const height = viewerHost.clientHeight;
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();
-            renderer.setSize(width, height);
-        });
-
-        function animate() {
-            requestAnimationFrame(animate);
-            controls.update(clock.getDelta());
-            renderer.render(scene, camera);
-        }
-
-        loadModel(0);
-        animate();
+        updateModelWarnings();
     </script>
 </body>
 
